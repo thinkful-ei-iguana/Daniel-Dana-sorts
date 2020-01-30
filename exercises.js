@@ -120,59 +120,107 @@ console.log(qSort(arr, 0, arr.length));
 
 // console.log(mergeSort(arr));
 
-function mergeSortll(ll) {
-  if (
-    ll.head === null ||
-    ll.head.next === null
-  ) {
-    return ll;
+// function mergeSortll(ll) {
+//   if (
+//     ll.head === null ||
+//     ll.head.next === null
+//   ) {
+//     return ll;
+//   }
+
+//   let slow = ll.head;
+//   let fast = ll.head;
+//   let slowest;
+//   while (fast && fast.next) {
+//     slowest = slow; //one behind
+//     slow = slow.next;
+//     fast = fast.next.next;
+//   }
+
+//   slowest.next = null;
+//   let left = new LinkedList();
+//   left.head = ll.head;
+
+//   let right = new LinkedList();
+//   right.head = slow;
+
+//   left = mergeSortll(left);
+//   right = mergeSortll(right);
+
+//   ll = mergell(left, right);
+//   return ll;
+// }
+
+// function mergell(left, right) {
+//   let rightNode = right.head;
+
+//   while (rightNode) {
+//     if (
+//       left.head.value < rightNode.value
+//     ) {
+//       right.insertBefore(
+//         rightNode.value,
+//         left.head
+//       );
+//       rightNode = rightNode.next;
+//       left.head = left.head.next;
+//     }
+
+//     right.findLast().next = left.head;
+//   }
+//   return right;
+// }
+// let ll = new LinkedList();
+// for (let value of arr) {
+//   ll.insertLast(value);
+// }
+
+// mergeSortll(ll).display();
+
+// 1 , 4 , 3 , 8 , 6 , 2
+// i
+// min: 1
+// arrlength = 6
+// max: 8
+
+//buckets: 1  2  3  4  5  6  7  8
+//         1  1 .1  1     1     1
+
+function bucket(arr, min, max) {
+  let bucket = Array(max).map(x => 0); //make sure to add min back to each index
+  console.log(bucket);
+  for (let i = 0; i < arr.length; i++) {
+    bucket[arr[i] - min]++;
   }
-
-  let slow = ll.head;
-  let fast = ll.head;
-  let slowest;
-  while (fast && fast.next) {
-    slowest = slow; //one behind
-    slow = slow.next;
-    fast = fast.next.next;
-  }
-
-  slowest.next = null;
-  let left = new LinkedList();
-  left.head = ll.head;
-
-  let right = new LinkedList();
-  right.head = slow;
-
-  left = mergeSortll(left);
-  right = mergeSortll(right);
-
-  ll = mergell(left, right);
-  return ll;
-}
-
-function mergell(left, right) {
-  let rightNode = right.head;
-
-  while (rightNode) {
-    if (
-      left.head.value < rightNode.value
-    ) {
-      right.insertBefore(
-        rightNode.value,
-        left.head
-      );
-      rightNode = rightNode.next;
-      left.head = left.head.next;
+  let j = 0;
+  for (let i = 0; i < bucket.length; ) {
+    // if (bucket[i] > 0) {
+    while (bucket[i] > 0) {
+      arr[j++] = i + min;
     }
-
-    right.findLast().next = left.head;
+    i++;
   }
-  return right;
-}
-let ll = new LinkedList();
-for (let value of arr) {
-  ll.insertLast(value);
+  return arr;
 }
 
-mergeSortll(ll).display();
+console.log(bucket(arr, 1, 98));
+
+function shuffle(arr) {
+  let temp;
+  let randidx;
+  for (let place of arr) {
+    randidx = Math.floor(
+      Math.random() * (arr.length - 1)
+    );
+    temp = place;
+    place = arr[randidx];
+    arr[randidx] = temp;
+  }
+  return arr;
+}
+
+console.log(
+  shuffle(bucket(arr, 1, 98))
+);
+
+const books = qSort;
